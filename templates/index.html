@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Code Reviewer</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background: #f4f4f4;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>AI Code Reviewer</h1>
+
+<p>Paste your code below:</p>
+
+<textarea id="code"></textarea>
+
+<br>
+
+<button onclick="reviewCode()">Review Code</button>
+
+<h2>AI Review</h2>
+
+<div id="result"></div>
+
+<script>
+async function reviewCode() {
+
+    const code = document.getElementById("code").value;
+
+    const response = await fetch("/review?code=" + encodeURIComponent(code), {
+        method: "POST"
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerText =
+        data.review[0].text;
+}
+</script>
+
+</body>
+</html>
